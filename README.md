@@ -1,5 +1,5 @@
+#### Insura-Lens
 ````markdown
-# Insura-Lens
 
 ## An Agentic AI Extension Tool for Precise Insurance Planning and Recommendation
 
