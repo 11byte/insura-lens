@@ -5,6 +5,8 @@
 **Insura-Lens** is a browser extension powered by agentic AI that intelligently scrapes and analyzes insurance content from any webpage in real-time.  
 It provides personalized explanations and plan comparisons based on user preferences using cutting-edge large language models (LLMs).
 
+Live page at: https://11byte.github.io/insura-lens/
+
 ---
 
 ## 🚀 Features
