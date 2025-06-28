@@ -24,7 +24,7 @@ export default function Hero() {
       </motion.p>
 
       <motion.a
-        href="https://chrome.google.com/webstore/category/extensions" // replace with actual extension link
+        href="https://github.com/11byte/insura-lens"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         className="install-button"
