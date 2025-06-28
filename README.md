@@ -1,5 +1,4 @@
 #### Insura-Lens
-````markdown
 
 ## An Agentic AI Extension Tool for Precise Insurance Planning and Recommendation
 
@@ -25,7 +24,7 @@ It provides personalized explanations and plan comparisons based on user prefere
 ```bash
 git clone https://github.com/11byte/insura-lens.git
 cd insura-lens
-````
+```
 
 ### 2. Install Frontend Dependencies
 
