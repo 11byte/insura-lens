@@ -1,0 +1,48 @@
+.sidebar-container {
+  width: 300px;
+  padding: 10px;
+  background: rgb(168, 239, 255);
+  border-left: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
+.chatbot-box {
+  margin: 10px 0;
+}
+
+.messages {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.user {
+  text-align: right;
+}
+
+.ai {
+  text-align: left;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
