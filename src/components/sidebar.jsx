@@ -2,11 +2,33 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ChatBot from "./chatbot";
 import ModalTabs from "./modalTabs";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [explanationReply, setExplanationReply] = useState(null);
+
+  const generatePDF = async () => {
+    const chatBox = document.getElementById("chatbox");
+
+    if (!chatBox) {
+      alert("❌ Chat container not found.");
+      return;
+    }
+
+    const canvas = await html2canvas(chatBox);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("insuralens_chat.pdf");
+  };
 
   // Listen for extraction result
   useEffect(() => {
@@ -127,7 +149,7 @@ export default function Sidebar() {
 
               <button
                 className="flex items-center gap-2 w-fit px-4 py-2 bg-white/10 border border-white/20 backdrop-blur-md text-white rounded-md hover:bg-white/20 hover:scale-105 transition shadow-md"
-                onClick={() => alert("PDF generated!")}
+                onClick={generatePDF}
               >
                 Generate PDF
               </button>

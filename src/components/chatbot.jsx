@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import ReactMarkdown from "react-markdown"; // 📦 must install: `npm install react-markdown`
-import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown"; // 📦 npm install react-markdown
+import remarkGfm from "remark-gfm"; // 📦 npm install remark-gfm
 
 export default function ChatBot({ externalMessage }) {
   const [messages, setMessages] = useState([]);
@@ -10,18 +10,13 @@ export default function ChatBot({ externalMessage }) {
 
   useEffect(() => {
     if (externalMessage) {
-      const structuredMessage = { role: "ai", content: externalMessage };
-      setMessages((prev) => [...prev, structuredMessage]);
+      const formatted = externalMessage.replace(/([.?!])\s*/g, "$1\n");
+      setMessages((prev) => [...prev, { role: "ai", content: formatted }]);
     }
   }, [externalMessage]);
 
-  const openModal = (content) => {
-    setModalContent(content);
-  };
-
-  const closeModal = () => {
-    setModalContent(null);
-  };
+  const openModal = (content) => setModalContent(content);
+  const closeModal = () => setModalContent(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,8 +39,10 @@ export default function ChatBot({ externalMessage }) {
       });
 
       const data = await res.json();
+      // Preprocess the reply to break lines after each sentence
+      const formattedReply = data.reply.replace(/([.?!])\s*/g, "$1\n");
 
-      setMessages((prev) => [...prev, { role: "ai", content: data.reply }]);
+      setMessages((prev) => [...prev, { role: "ai", content: formattedReply }]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
@@ -63,7 +60,7 @@ export default function ChatBot({ externalMessage }) {
 
   return (
     <div className="flex flex-col bg-[beige] rounded-lg p-3 shadow-md h-[400px] text-black">
-      {/* Messages */}
+      {/* Message list */}
       <div className="flex-1 overflow-y-auto space-y-3 mb-3 flex flex-col pr-1">
         {messages.map((msg, i) => (
           <div
@@ -75,15 +72,15 @@ export default function ChatBot({ externalMessage }) {
             }`}
             onClick={() => msg.role === "ai" && openModal(msg.content)}
           >
-            {msg.content.length > 100
-              ? msg.content.slice(0, 100) + "..."
+            {msg.content.length > 120
+              ? msg.content.slice(0, 120) + "..."
               : msg.content}
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
+      {/* Input section */}
       <div className="flex gap-2 items-start">
         <textarea
           value={input}
@@ -101,33 +98,37 @@ export default function ChatBot({ externalMessage }) {
         </button>
       </div>
 
-      {/* Modal for full message */}
+      {/* Full answer Modal */}
       {modalContent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-xl w-[90%] max-w-[600px] max-h-[80vh] overflow-y-auto shadow-xl text-black relative">
             <button
-              className="absolute top-2 right-3 text-gray-700 hover:text-red-500"
+              className="absolute top-2 right-3 text-gray-700 hover:text-red-500 text-xl"
               onClick={closeModal}
             >
               ❌
             </button>
 
             <ReactMarkdown
-              children={modalContent}
               remarkPlugins={[remarkGfm]}
               components={{
                 h1: ({ node, ...props }) => (
-                  <h1 className="text-2xl font-bold mb-2" {...props} />
+                  <h1 className="text-2xl font-bold mt-4 mb-2" {...props} />
                 ),
                 h2: ({ node, ...props }) => (
-                  <h2 className="text-xl font-semibold mb-2" {...props} />
+                  <h2 className="text-xl font-semibold mt-4 mb-2" {...props} />
                 ),
-                p: ({ node, ...props }) => <p className="mb-2" {...props} />,
-                li: ({ node, ...props }) => (
-                  <li className="list-disc ml-6" {...props} />
+                p: ({ node, ...props }) => (
+                  <p className="text-sm mt-2 leading-relaxed" {...props} />
                 ),
+                ul: ({ node, ...props }) => (
+                  <ul className="list-disc ml-5 space-y-1" {...props} />
+                ),
+                li: ({ node, ...props }) => <li {...props} />,
               }}
-            />
+            >
+              {modalContent}
+            </ReactMarkdown>
           </div>
         </div>
       )}

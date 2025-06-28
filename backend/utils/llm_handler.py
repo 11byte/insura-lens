@@ -22,6 +22,8 @@ def get_llm_response(user_input: str) -> str:
                         "Always provide structured, easy-to-understand, and trustworthy responses. "
                         "If multiple insurance options are present, compare them with pros and cons. "
                         "Use headings, bullet points, or tables where helpful."
+                        "provide the response in a structured manner that can be easily displayed in terms of individual paras , leave space after one para."
+                        "suggest the best insurance plan at the start itself if request consists of multiple insurances"
                     )
                 },
                 {
