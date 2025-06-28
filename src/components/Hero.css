@@ -1,0 +1,41 @@
+.hero {
+  padding: 100px 20px;
+  max-width: 800px;
+  margin: auto;
+  z-index: 1;
+}
+
+.title {
+  font-size: 4rem;
+  color: #f5f5dc;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: #b0c4de;
+  margin-bottom: 30px;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #d3d3c7;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.install-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #f5f5dc;
+  color: #0e1b2d;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.install-button:hover {
+  background-color: #e6e6b8;
+}
